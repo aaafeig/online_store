@@ -16,3 +16,9 @@ def test_product(product_test):
     assert  product_test.description == "4K, темный цвет, Google assistant"
     assert  product_test.price == 35000
     assert  product_test.quality == 5
+
+
+def test_category(category_test):
+    assert  category_test.name == "Телевизор"
+    assert category_test.description == "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
+    assert category_test.product == []
