@@ -44,19 +44,18 @@ class Product:
 class Category:
 
     category_count = 0
+    product_count = 0
 
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
         self.__products = products
+        self.product_count = sum(product.quantity for product in self.__products)
         Category.category_count += 1
 
     def add_product(self, product):
         self.__products.append(product)
-
-    @property
-    def product_count(self):
-        return sum(product.quantity for product in self.__products)
+        self.product_count += product.quantity
 
     @property
     def products(self):
