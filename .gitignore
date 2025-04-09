@@ -1,0 +1,3 @@
+htmlcov/
+!htmlcov/index.html
+.coverage.*
