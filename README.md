@@ -30,7 +30,10 @@ pytest
 Name                    Stmts   Miss  Cover
 -------------------------------------------
 tests\__init__.py           0      0   100%
-tests\test_classes.py      17      0   100%
+tests\test_classes.py      54      0   100%
 -------------------------------------------
-TOTAL                      17      0   100%
+TOTAL                      54      0   100%
+
+
+
 ```
