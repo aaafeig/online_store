@@ -1,18 +1,28 @@
 import pytest
-from src.classes import Product, Category
+from unicodedata import category
+
+from src.classes import Product, Category, CategoryIterator
 
 
 @pytest.fixture()
 def product_test():
+    Product.products_list = []
     product = Product.new_product(
-        {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 180000.0,
-         "quantity": 5})
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "description": "256GB, Серый цвет, 200MP камера",
+            "price": 180000.0,
+            "quantity": 5,
+        }
+    )
     return product
+
 
 @pytest.fixture()
 def price_change():
     product = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     return product
+
 
 @pytest.fixture()
 def category_test():
@@ -28,11 +38,13 @@ def category_test():
     )
     return category1
 
+
 def test_price_change_null(price_change, monkeypatch):
     assert price_change.price == 210_000.0
     monkeypatch.setattr("builtins.input", lambda *args: "y")
     monkeypatch.setattr = 0.0
     assert price_change.price == 210_000.0
+
 
 def test_price_change_disagree(price_change, monkeypatch):
     assert price_change.price == 210_000.0
@@ -54,12 +66,18 @@ def test_product(product_test):
     assert product_test.price == 180_000.0
     assert product_test.quantity == 5
     new_product = Product.new_product(
-        {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 185000.0,
-         "quantity": 3})
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "description": "256GB, Серый цвет, 200MP камера",
+            "price": 185000.0,
+            "quantity": 3,
+        }
+    )
     assert product_test.name == "Samsung Galaxy S23 Ultra"
     assert product_test.description == "256GB, Серый цвет, 200MP камера"
     assert product_test.price == max(new_product.price, product_test.price)
     assert product_test.quantity == 8
+
 
 def test_count(category_test):
     assert category_test.product_count == 27
@@ -67,6 +85,8 @@ def test_count(category_test):
     category_test.add_product(product4)
 
     assert category_test.product_count == 27 + product4.quantity
+
+
 def test_category(category_test):
     assert category_test.name == "Смартфоны"
     assert (
@@ -86,3 +106,28 @@ def test_category(category_test):
         "Xiaomi Redmi Note 11, 31000.0 руб., остаток 14 штук",
         '55" QLED 4K, 123000.0 руб., остаток 7 штук',
     ]
+
+
+def test_printing_product(product_test):
+    assert str(product_test) == "Samsung Galaxy S23 Ultra, 180000.0 руб. остаток: 5"
+
+
+def test_printing_category(category_test):
+    assert str(category_test) == "Смартфоны, количество продуктов: 27"
+
+
+def test_adding(category_test):
+    product1 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    product2 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+    assert (
+        int(product1 + product2)
+        == product1.price * product1.quantity + product2.price * product2.quantity
+    )
+
+
+def test_iterator(category_test):
+    result = []
+    for i in CategoryIterator(category_test):
+        result.append(i)
+
+    assert result == category_test._Category__products

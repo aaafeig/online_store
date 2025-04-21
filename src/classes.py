@@ -40,6 +40,12 @@ class Product:
         else:
             print("Цена не должна быть нулевая или отрицательная")
 
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. остаток: {self.quantity}"
+
+    def __add__(self, other):
+        return self.__price * self.quantity + other.__price * other.quantity
+
 
 class Category:
 
@@ -63,3 +69,24 @@ class Category:
             f"{product.name}, {product.price} руб., остаток {product.quantity} штук"
             for product in self.__products
         ]
+
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {self.product_count}"
+
+
+class CategoryIterator:
+
+    def __init__(self, category):
+        self.__products = category._Category__products
+        self.__index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.__index < len(self.__products):
+            product = self.__products[self.__index]
+            self.__index += 1
+            return product
+        else:
+            raise StopIteration
