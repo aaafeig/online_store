@@ -93,17 +93,17 @@ def test_category(category_test):
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
     assert category_test.products == [
-        "Samsung Galaxy S23 Ultra, 180000.0 руб., остаток 5 штук",
-        "Iphone 15, 210000.0 руб., остаток 8 штук",
-        "Xiaomi Redmi Note 11, 31000.0 руб., остаток 14 штук",
+        "Samsung Galaxy S23 Ultra, 180000.0 руб. остаток: 5",
+        "Iphone 15, 210000.0 руб. остаток: 8",
+        "Xiaomi Redmi Note 11, 31000.0 руб. остаток: 14",
     ]
     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
     category_test.add_product(product4)
     assert category_test.products == [
-        "Samsung Galaxy S23 Ultra, 180000.0 руб., остаток 5 штук",
-        "Iphone 15, 210000.0 руб., остаток 8 штук",
-        "Xiaomi Redmi Note 11, 31000.0 руб., остаток 14 штук",
-        '55" QLED 4K, 123000.0 руб., остаток 7 штук',
+        "Samsung Galaxy S23 Ultra, 180000.0 руб. остаток: 5",
+        "Iphone 15, 210000.0 руб. остаток: 8",
+        "Xiaomi Redmi Note 11, 31000.0 руб. остаток: 14",
+        '55" QLED 4K, 123000.0 руб. остаток: 7',
     ]
 
 
@@ -115,13 +115,18 @@ def test_printing_category(category_test):
     assert str(category_test) == "Смартфоны, количество продуктов: 27"
 
 
-def test_adding(category_test):
+def test_add(category_test):
     product1 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     product2 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
     assert (
         int(product1 + product2)
         == product1.price * product1.quantity + product2.price * product2.quantity
     )
+
+
+def test_add_product_fall(category_test):
+    with pytest.raises(TypeError):
+        category_test.add_product("Not a product")
 
 
 def test_iterator(category_test):
