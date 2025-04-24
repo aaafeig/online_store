@@ -1,5 +1,5 @@
 [project]
-name = "online shop"
+name = "online-store"
 version = "0.1.0"
 description = "онлайн магазин разрабатываем в каечстве домашки по python"
 authors = [
@@ -8,9 +8,20 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "flake8 (>=7.2.0,<8.0.0)",
+    "black (>=25.1.0,<26.0.0)",
+    "pytest (>=8.3.5,<9.0.0)",
+    "pytest-cov (>=6.1.1,<7.0.0)"
 ]
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[black]
+line-length = 119
+exclude = ".git"
+[isort]
+line-length = 119
+
