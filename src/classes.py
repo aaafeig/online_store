@@ -1,4 +1,8 @@
-class Product:
+from src.BaseProduct import BaseProduct
+from src.Mixins import MixinLog
+
+
+class Product(MixinLog, BaseProduct):
     products_list = []
 
     def __init__(self, name, description, price, quality):
@@ -6,6 +10,7 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quality
+        super().__init__()
 
     @classmethod
     def new_product(cls, dict_ab_product):
