@@ -1,4 +1,4 @@
-from src.BaseProduct import BaseProduct
+from src.abstract_classes import BaseProduct, BaseOrder
 from src.Mixins import MixinLog
 
 
@@ -54,14 +54,13 @@ class Product(MixinLog, BaseProduct):
         raise TypeError
 
 
-class Category:
+class Category(BaseOrder):
 
     category_count = 0
     product_count = 0
 
     def __init__(self, name, description, products):
-        self.name = name
-        self.description = description
+        super().__init__(name, description)
         self.__products = products
         self.__class__.product_count = sum(
             product.quantity for product in self.__products
@@ -99,3 +98,14 @@ class CategoryIterator:
             return product
         else:
             raise StopIteration
+
+class Order(BaseOrder):
+
+    def __init__(self, product, quantity):
+        super().__init__(product.name, product.description)
+        self.product = product
+        self.quantity = quantity
+        self.total_price = product.price * quantity
+
+    def __str__(self):
+        return f"Заказ: {self.name}, {self.quantity} штук, {self.total_price} руб."

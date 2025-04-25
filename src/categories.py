@@ -1,4 +1,4 @@
-from .classes import Product, Category
+from .classes import Product
 
 
 class Smartphone(Product):

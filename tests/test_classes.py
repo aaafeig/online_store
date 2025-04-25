@@ -1,6 +1,6 @@
 import pytest
 
-from src.classes import Product, Category, CategoryIterator
+from src.classes import Product, Category, CategoryIterator, Order
 
 
 @pytest.fixture()
@@ -135,3 +135,11 @@ def test_iterator(category_test):
         result.append(i)
 
     assert result == category_test._Category__products
+
+
+def test_order(product_test):
+    order_ex = Order(product_test, 2)
+    assert (
+        str(order_ex)
+        == f"Заказ: {product_test.name}, {order_ex.quantity} штук, {product_test.price * order_ex.quantity} руб."
+    )

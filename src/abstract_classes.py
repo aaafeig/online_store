@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod, abstractclassmethod
+from abc import ABC, abstractmethod
 
 
 class BaseProduct(ABC):
@@ -17,4 +17,16 @@ class BaseProduct(ABC):
 
     @abstractmethod
     def __add__(self, other):
+        pass
+
+
+class BaseOrder(ABC):
+
+    @abstractmethod
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+    @abstractmethod
+    def __str__(self):
         pass
