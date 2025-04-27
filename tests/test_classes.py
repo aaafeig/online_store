@@ -143,3 +143,37 @@ def test_order(product_test):
         str(order_ex)
         == f"Заказ: {product_test.name}, {order_ex.quantity} штук, {product_test.price * order_ex.quantity} руб."
     )
+
+
+def test_middle_price_category(category_test):
+    product1 = Product(
+        "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 1
+    )
+    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 1)
+    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 1)
+
+    category1 = Category(
+        "Смартфоны", "Категория смартфонов", [product1, product2, product3]
+    )
+    expected_middle_price = round(
+        category1._Category__count_price_product / category1._Category__product_count, 2
+    )
+    assert category1.middle_price == expected_middle_price
+    new_product = Product("Iphone 15", "512GB, Gray space", 24000.0, 1)
+    category1.add_product(new_product)
+    expected_middle_price_after = round(
+        sum(
+            product.price * product.quantity
+            for product in category1._Category__products
+        )
+        / sum(product.quantity for product in category1._Category__products),
+        2,
+    )
+    assert category1.middle_price == expected_middle_price_after
+
+
+def test_product_zero_quantity_raises_error():
+    with pytest.raises(
+        ValueError, match="Товар с нулевым количеством не может быть добавлен"
+    ):
+        Product("Тест", "Описание", 1000, 0)

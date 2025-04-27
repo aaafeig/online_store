@@ -27,13 +27,14 @@ pytest
 ```
 ### Покрытие тестами
 ```sh
-Name                    Stmts   Miss  Cover
--------------------------------------------
-tests\__init__.py           0      0   100%
-tests\test_classes.py      54      0   100%
--------------------------------------------
-TOTAL                      54      0   100%
-
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+tests\__init__.py              0      0   100%
+tests\test_categories.py      27      0   100%
+tests\test_classes.py         88      0   100%
+tests\test_mixins.py           4      0   100%
+----------------------------------------------
+TOTAL                        119      0   100%
 
 
 ```
