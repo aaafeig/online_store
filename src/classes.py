@@ -1,5 +1,5 @@
 from src.abstract_classes import BaseProduct, BaseOrder
-from src.Mixins import MixinLog
+from src.mixins import MixinLog
 from src.excpetion_classes import ProductQuantityError
 
 
